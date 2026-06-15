@@ -1,0 +1,356 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>ProgressLife</title>
+
+    <link rel="stylesheet" href="style.css" />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+  <body>
+    <!-- HEADER -->
+    <header>
+      <div class="logo">ProgressLife</div>
+
+      <div class="theme-button">
+        <i class="fa-solid fa-palette"></i>
+      </div>
+    </header>
+
+    <!-- ================= HOME ================= -->
+
+    <section class="page active" id="home">
+      <h1>Selamat Datang</h1>
+
+      <div class="cards">
+        <div class="card" onclick="showPage('tabungan')">
+          <i class="fa-solid fa-bullseye"></i>
+
+          <h2>Tabungan</h2>
+
+          <p>Kelola target impianmu</p>
+        </div>
+
+        <div class="card" onclick="showPage('keuangan')">
+          <i class="fa-solid fa-wallet"></i>
+
+          <h2>Keuangan</h2>
+
+          <p>Pemasukan dan pengeluaran</p>
+        </div>
+
+        <div class="card" onclick="showPage('olahraga')">
+          <i class="fa-solid fa-dumbbell"></i>
+
+          <h2>Olahraga</h2>
+
+          <p>Latihan dan progres tubuh</p>
+        </div>
+
+        <div class="card" onclick="showPage('self')">
+          <i class="fa-solid fa-seedling"></i>
+
+          <h2>Memperbaiki Diri</h2>
+
+          <p>Kebiasaan baik harian</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= TABUNGAN ================= -->
+
+    <section class="page" id="tabungan">
+      <h1>Tabungan</h1>
+
+      <button class="main-btn" id="addTargetBtn">+ Tambahkan Target</button>
+
+      <div id="targetContainer"></div>
+
+      <button class="backBtn" onclick="showPage('home')">← Kembali</button>
+    </section>
+
+    <!-- POPUP TARGET -->
+
+    <div class="popup" id="popupTarget">
+      <div class="popup-content">
+        <h2>Tambah Target</h2>
+
+        <input type="file" id="targetImage" accept="image/*" />
+
+        <input
+          type="text"
+          id="targetName"
+          placeholder="Nama Target atau Keinginan"
+        />
+
+        <input type="number" id="targetMoney" placeholder="Nominal Target" />
+
+        <input
+          type="number"
+          id="currentMoney"
+          placeholder="Tabungan Saat Ini"
+        />
+
+        <button class="main-btn" id="saveTargetBtn">Simpan</button>
+
+        <button class="cancel-btn" id="closePopupBtn">Tutup</button>
+      </div>
+    </div>
+
+    <!-- ================= KEUANGAN ================= -->
+
+    <section class="page" id="keuangan">
+      <h1>Keuangan</h1>
+
+      <h2 id="bulanSekarang">Bulan Sekarang</h2>
+
+      <div class="keuangan-card">
+        <h3>Penghasilan Bulan Ini</h3>
+
+        <input type="number" id="penghasilan" />
+
+        <h3>Dana Darurat</h3>
+
+        <input type="number" id="danaDarurat" />
+
+        <h3>Kebutuhan</h3>
+
+        <input type="number" id="kebutuhan" />
+
+        <h3>Tabungan</h3>
+
+        <input type="number" id="tabunganBulanan" />
+      </div>
+
+      <div class="keuangan-card">
+        <h2>Pengeluaran Hari Ini</h2>
+
+        <input type="date" id="tanggalPengeluaran" />
+
+        <input
+          type="number"
+          id="pengeluaranHarian"
+          placeholder="Nominal Pengeluaran"
+        />
+      </div>
+
+      <div class="keuangan-card">
+        <h2>Grafik Keuangan</h2>
+
+        <canvas id="keuanganChart"> </canvas>
+      </div>
+
+      <button class="backBtn" onclick="showPage('home')">← Kembali</button>
+    </section>
+
+    <!-- ================= OLAHRAGA ================= -->
+
+    <section class="page" id="olahraga">
+      <h1>Olahraga</h1>
+
+      <div class="olahraga-card">
+        <h2>Senin <span id="statusSenin"></span></h2>
+
+        <label><input type="checkbox" /> Decline Push Up</label>
+
+        <label><input type="checkbox" /> Wide Push Up</label>
+
+        <label><input type="checkbox" /> Diamond Push Up</label>
+
+        <p>2x Failure</p>
+      </div>
+
+      <div class="olahraga-card">
+        <h2>Selasa <span id="statusSelasa"></span></h2>
+
+        <label><input type="checkbox" /> Pull Up / Chin Up</label>
+
+        <label
+          ><input type="checkbox" /> Barbell Row menggunakan tas + sapu</label
+        >
+
+        <p>2x Failure</p>
+      </div>
+
+      <div class="olahraga-card">
+        <h2>Rabu <span id="statusRabu"></span></h2>
+
+        <label><input type="checkbox" /> Plank</label>
+
+        <label><input type="checkbox" /> Sit Up</label>
+
+        <p>2x Failure</p>
+      </div>
+
+      <div class="olahraga-card">
+        <h2>Kamis <span id="statusKamis"></span></h2>
+
+        <label><input type="checkbox" /> Decline Push Up</label>
+
+        <label><input type="checkbox" /> Wide Push Up</label>
+
+        <label><input type="checkbox" /> Diamond Push Up</label>
+
+        <p>2x Failure</p>
+      </div>
+
+      <div class="olahraga-card">
+        <h2>Jumat <span id="statusJumat"></span></h2>
+
+        <label><input type="checkbox" /> Pull Up / Chin Up</label>
+
+        <label
+          ><input type="checkbox" /> Barbell Row menggunakan tas + sapu</label
+        >
+
+        <p>2x Failure</p>
+      </div>
+
+      <div class="olahraga-card">
+        <h2>Sabtu <span id="statusSabtu"></span></h2>
+
+        <label><input type="checkbox" /> Forearm</label>
+      </div>
+
+      <div class="olahraga-card">
+        <h2>Minggu <span id="statusMinggu"></span></h2>
+
+        <label><input type="checkbox" /> Joging</label>
+
+        <label><input type="checkbox" /> Rest</label>
+      </div>
+
+      <div class="olahraga-card">
+        <h2>Grafik Progres</h2>
+
+        <canvas id="olahragaChart"></canvas>
+      </div>
+
+      <button class="backBtn" onclick="showPage('home')">← Kembali</button>
+    </section>
+
+    <!-- ================= MEMPERBAIKI DIRI ================= -->
+
+    <section class="page" id="self">
+      <h1>Memperbaiki Diri</h1>
+
+      <div class="self-card">
+        <h2>Sholat</h2>
+
+        <label><input type="checkbox" /> Subuh</label>
+
+        <label><input type="checkbox" /> Zuhur</label>
+
+        <label><input type="checkbox" /> Asar</label>
+
+        <label><input type="checkbox" /> Magrib</label>
+
+        <label><input type="checkbox" /> Isya</label>
+      </div>
+
+      <div class="self-card">
+        <h2>Kebiasaan Baik</h2>
+
+        <label><input type="checkbox" /> Bangun Pagi</label>
+
+        <label><input type="checkbox" /> Tidur Teratur</label>
+
+        <label><input type="checkbox" /> Baca Buku</label>
+
+        <label><input type="checkbox" /> Mengaji</label>
+
+        <label><input type="checkbox" /> Kerja</label>
+
+        <label><input type="checkbox" /> Olahraga Rutin</label>
+
+        <label><input type="checkbox" /> Main Secukupnya</label>
+
+        <label><input type="checkbox" /> Maksimal 5 Batang Rokok</label>
+      </div>
+
+      <button class="backBtn" onclick="showPage('home')">← Kembali</button>
+    </section>
+
+    <!-- ================= HISTORY ================= -->
+
+    <section class="page" id="history">
+      <h1>History</h1>
+
+      <div class="history-card">
+        <h2>Grafik Perkembangan</h2>
+
+        <canvas id="historyChart"></canvas>
+      </div>
+
+      <div class="history-card">
+        <h2>Status Hari Ini</h2>
+
+        <p id="statusHarian">Baik</p>
+      </div>
+    </section>
+
+    <!-- ================= PROFIL ================= -->
+
+    <section class="page" id="profile">
+      <div class="profile">
+        <div class="profile-image">
+          <i class="fa-solid fa-user"></i>
+        </div>
+
+        <h2 id="namaUser">Nama Pengguna</h2>
+
+        <p id="levelUser">Level 1</p>
+      </div>
+
+      <div class="profile-card">
+        <h3>Rank</h3>
+
+        <p id="rankUser">Bronze</p>
+      </div>
+
+      <div class="profile-card">
+        <h3>XP</h3>
+
+        <p id="xpUser">0</p>
+      </div>
+
+      <div class="profile-card">
+        <h3>Streak</h3>
+
+        <p id="streakUser">0 Hari</p>
+      </div>
+    </section>
+
+    <!-- ================= NAVBAR ================= -->
+
+    <nav>
+      <div class="nav-item active" onclick="showPage('home')">
+        <i class="fa-solid fa-house"></i>
+
+        <span>Home</span>
+      </div>
+
+      <div class="nav-item" onclick="showPage('history')">
+        <i class="fa-solid fa-chart-line"></i>
+
+        <span>History</span>
+      </div>
+
+      <div class="nav-item" onclick="showPage('profile')">
+        <i class="fa-solid fa-user"></i>
+
+        <span>Profil</span>
+      </div>
+    </nav>
+
+    <script src="script.js"></script>
+  </body>
+</html>
