@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SELF IMPROVEMENT RPG</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+  <body>
+    <div id="home-page" class="container">
+      <h1>Perbaiki dirimu menjadi lebih baik dari sebelumnya</h1>
+      <p class="subtitle">
+        Selesaikan misi harian, kumpulkan XP, dan tingkatkan Rank dirimu!
+      </p>
+
+      <div class="progress-box">
+        <h3>Status Hari Ini</h3>
+        <div class="progress-bar-container">
+          <div
+            id="home-progress-bar"
+            class="progress-bar"
+            style="width: 0%"
+          ></div>
+        </div>
+        <p id="home-progress-text" class="progress-text">
+          Belum ada aktivitas selesai
+        </p>
+      </div>
+
+      <p class="info-text">
+        Masuk atau daftar akun terlebih dahulu untuk memulai petualangan
+        disiplinmu.
+      </p>
+      <button id="get-started-btn" class="btn-primary">Mulai Sekarang</button>
+    </div>
+
+    <div id="auth-page" class="container hidden">
+      <div id="login-form">
+        <h2>Masuk Akun</h2>
+        <p class="subtitle">Kembali ke jalur latihanmu</p>
+        <div class="form-group">
+          <input
+            type="text"
+            id="login-username"
+            placeholder="Nama Pengguna"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <input
+            type="password"
+            id="login-password"
+            placeholder="Password"
+            required
+          />
+        </div>
+        <button id="login-btn" class="btn-primary">Masuk</button>
+        <p class="switch-auth-text">
+          Belum punya akun? <span id="go-to-register">Daftar di sini</span>
+        </p>
+      </div>
+
+      <div id="register-form" class="hidden">
+        <h2>Daftar Akun Baru</h2>
+        <p class="subtitle">Isi data awal karakter dirimu</p>
+        <div class="form-group">
+          <input
+            type="text"
+            id="reg-username"
+            placeholder="Buat Nama Pengguna"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <input
+            type="password"
+            id="reg-password"
+            placeholder="Buat Password"
+            required
+          />
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <input type="number" id="reg-tb" placeholder="TB (cm)" required />
+          </div>
+          <div class="form-group">
+            <input type="number" id="reg-bb" placeholder="BB (kg)" required />
+          </div>
+        </div>
+        <div class="form-group">
+          <select id="reg-target" required>
+            <option value="" disabled selected>Pilih Tujuan Utama</option>
+            <option value="Bulking (Naik Massa Otot)">
+              Bulking (Naik Massa Otot)
+            </option>
+            <option value="Cutting (Turun Lemak)">Cutting (Turun Lemak)</option>
+            <option value="Menjaga Kebugaran">Menjaga Kebugaran</option>
+          </select>
+        </div>
+        <button id="register-btn" class="btn-success">
+          Buat Karakter & Masuk
+        </button>
+        <p class="switch-auth-text">
+          Sudah punya akun? <span id="go-to-login">Login di sini</span>
+        </p>
+      </div>
+
+      <p id="auth-error" class="error-msg"></p>
+      <button id="back-to-home-btn" class="btn-secondary">Kembali</button>
+    </div>
+
+    <div id="main-content" class="container app-layout hidden">
+      <div class="user-status-card">
+        <div class="rank-badge-info">
+          <span id="user-rank-title">🎖️ Bronze Novice</span>
+          <span id="user-level">LV. 1</span>
+        </div>
+        <div class="xp-bar-container">
+          <div id="user-xp-bar" class="xp-bar" style="width: 0%"></div>
+        </div>
+        <div class="xp-text-detail">
+          <span id="xp-number">0 / 100 XP</span>
+        </div>
+      </div>
+
+      <div id="menu-utama" class="menu-content">
+        <div id="dashboard-hub" class="hub-container">
+          <button id="hub-latihan-btn" class="btn-hub">🏋️ MENU LATIHAN</button>
+          <button id="hub-improve-btn" class="btn-hub">🧠 IMPROVE DIRI</button>
+          <button id="hub-tabungan-btn" class="btn-hub">
+            💰 KOTAK TABUNGAN
+          </button>
+        </div>
+
+        <div id="page-detail-latihan" class="sub-page hidden">
+          <button id="back-to-hub-1" class="btn-back-hub">
+            ⬅️ Kembali ke Menu
+          </button>
+          <div class="day-schedule-box">
+            <h3 id="current-day-name">HARI -</h3>
+            <h4 id="current-routine-title">ROUTINE LAYER</h4>
+          </div>
+          <div class="section-title">Misi Workout Hari Ini (+15 XP)</div>
+          <div id="dynamic-workout-list" class="workout-list"></div>
+        </div>
+
+        <div id="page-detail-improve" class="sub-page hidden">
+          <button id="back-to-hub-2" class="btn-back-hub">
+            ⬅️ Kembali ke Menu
+          </button>
+          <div class="section-title">Misi Kebiasaan Baik (+10 XP)</div>
+          <div class="workout-list">
+            <label class="workout-item">
+              <input type="checkbox" id="imp-book" />
+              <span class="workout-text">Membaca Al Qur`an (1 lembar)</span>
+            </label>
+            <label class="workout-item">
+              <input type="checkbox" id="imp-code" />
+              <span class="workout-text"
+                >Belajar Koding / Upgrade Skill</span
+              >
+            </label>
+            <label class="workout-item">
+              <input type="checkbox" id="imp-shalat" />
+              <span class="workout-text"
+                >Shalat Subuh (04:15 s.d. 05:00)</span
+              >
+            </label>
+            <label class="workout-item">
+              <input type="checkbox" id="imp-shalat1" />
+              <span class="workout-text"
+                >Shalat Dzuhur (11:45 s.d. 12:30)</span
+              >
+            </label>
+            <label class="workout-item">
+              <input type="checkbox" id="imp-shalat3" />
+              <span class="workout-text"
+                >Shalat Ashar (15:00 s.d. 15:45)</span
+              >
+            </label>
+            <label class="workout-item">
+              <input type="checkbox" id="imp-shalat4" />
+              <span class="workout-text"
+                >Shalat Maghrib (17:45 s.d. 18:30)</span
+              >
+            </label>
+            </label>
+            <label class="workout-item">
+              <input type="checkbox" id="imp-shalat5" />
+              <span class="workout-text"
+                >Shalat Isya (19:00 s.d. 19:40)</span
+              >
+            </label>
+          </div>
+        </div>
+
+        <div id="page-detail-tabungan" class="sub-page hidden">
+          <button id="back-to-hub-3" class="btn-back-hub">
+            ⬅️ Kembali ke Menu
+          </button>
+          <div class="section-title">Catatan Disiplin Finansial (+5 XP)</div>
+          <div class="finance-box">
+            <h2 id="total-savings">Rp 0</h2>
+            <div
+              class="form-group"
+              style="margin-top: 10px; margin-bottom: 10px"
+            >
+              <input
+                type="number"
+                id="input-money"
+                placeholder="Masukkan Nominal (Rp)"
+              />
+            </div>
+            <div class="form-row">
+              <button id="add-money-btn" class="btn-success-sm">
+                Simpan Uang
+              </button>
+              <button id="withdraw-money-btn" class="btn-danger-sm">
+                Ambil Uang
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="menu-riwayat" class="menu-content hidden">
+        <div class="section-title" style="text-align: center; margin-top: 10px">
+          📈 Grafik Konsistensi
+        </div>
+        <div class="chart-box">
+          <h3>Grafik Progres Harian (%)</h3>
+          <canvas id="dailyChart" width="400" height="200"></canvas>
+        </div>
+        <div class="chart-box">
+          <h3>Grafik Stabilitas Mingguan (%)</h3>
+          <canvas id="weeklyChart" width="400" height="200"></canvas>
+        </div>
+      </div>
+
+      <div id="menu-profil" class="menu-content hidden">
+        <div class="profile-card">
+          <div class="profile-avatar">👤</div>
+          <h2 id="profile-name">Nama Pengguna</h2>
+          <p id="profile-stats-summary" class="user-stats">
+            TB: - cm | BB: - kg
+          </p>
+          <div class="target-badge" id="profile-target">Target: -</div>
+        </div>
+
+        <div class="theme-selector-box">
+          <h3>🎨 Pilih Tema Warna App</h3>
+          <div class="theme-options">
+            <div class="theme-dot dot-green" data-theme="green"></div>
+            <div class="theme-dot dot-blue" data-theme="blue"></div>
+            <div class="theme-dot dot-red" data-theme="red"></div>
+            <div class="theme-dot dot-purple" data-theme="purple"></div>
+
+            <div class="theme-dot dot-orange" data-theme="orange"></div>
+            <div class="theme-dot dot-yellow" data-theme="yellow"></div>
+            <div class="theme-dot dot-pink" data-theme="pink"></div>
+            <div class="theme-dot dot-cyan" data-theme="cyan"></div>
+
+            <div class="theme-dot dot-white" data-theme="white"></div>
+            <div class="theme-dot dot-gray" data-theme="gray"></div>
+          </div>
+        </div>
+
+        <button id="reset-btn" class="btn-danger" style="margin-top: 20px">
+          Reset Misi Hari Ini
+        </button>
+        <button id="logout-btn" class="btn-secondary" style="margin-top: 12px">
+          Keluar Akun
+        </button>
+      </div>
+
+      <div class="bottom-navbar">
+        <button id="nav-utama-btn" class="nav-item active">
+          <span class="nav-icon">🏠</span>
+          <span class="nav-text">Utama</span>
+        </button>
+        <button id="nav-riwayat-btn" class="nav-item">
+          <span class="nav-icon">📊</span>
+          <span class="nav-text">Riwayat</span>
+        </button>
+        <button id="nav-profil-btn" class="nav-item">
+          <span class="nav-icon">👤</span>
+          <span class="nav-text">Profil</span>
+        </button>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
